@@ -1,0 +1,38 @@
+# network-policy-example.yaml
+#
+# This example demonstrates how to restrict network traffic to a backend application.
+# It applies a default-deny policy and then allows ingress traffic only from
+# pods with the label `app: frontend`.
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-deny-all
+  namespace: default # Should be your application's namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: backend # Apply this policy to pods with the 'app: backend' label
+  policyTypes:
+  - Ingress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: default # Should be your application's namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend # Allow traffic from pods with the 'app: frontend' label
+    ports:
+    - protocol: TCP
+      port: 8080 # The port the backend application is listening on

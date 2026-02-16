@@ -1,0 +1,30 @@
+# Values for the kube-prometheus-stack Helm chart
+
+# -- Grafana configuration
+grafana:
+  # -- Set the admin password for Grafana.
+  # -- By default, a random password is generated.
+  # adminPassword: "your-secure-password"
+
+  # -- Persist Grafana dashboards and settings
+  persistence:
+    enabled: true
+    type: pvc
+    size: 10Gi
+    # storageClassName: "your-storage-class" # Set your storage class if needed
+
+# -- Prometheus configuration
+prometheus:
+  prometheusSpec:
+    # -- Prometheus retention policy for metrics
+    retention: 15d
+
+    # -- Prometheus storage configuration
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: standard # Use your preferred storage class
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi

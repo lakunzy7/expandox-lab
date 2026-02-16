@@ -1,0 +1,35 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run Tests
+      run: echo "Running tests..." # Replace with your actual test commands
+
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v3
+
+    # Authenticate and push to container registry (e.g., GCR)
+    # This part needs to be configured with secrets in your repo settings
+    # - name: Login to GCR
+    #   ...
+    # - name: Build and push
+    #   ...
+
+    - name: Scan image for vulnerabilities
+      run: echo "Scanning image..." # Replace with your image scanning command
+
+    - name: Update manifests in config-repo
+      run: echo "Updating manifests..." # Replace with logic to update the GitOps repo

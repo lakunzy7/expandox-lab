@@ -1,0 +1,15 @@
+# Terraform state and configuration files
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+
+# Local Kubernetes configuration files
+/terraform-local/*config
+
+# macOS specific files
+.DS_Store
+
+# Generic log files
+*.log

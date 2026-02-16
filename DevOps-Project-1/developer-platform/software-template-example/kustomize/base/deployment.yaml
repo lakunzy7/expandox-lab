@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: new-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: new-service
+  template:
+    metadata:
+      labels:
+        app: new-service
+    spec:
+      containers:
+      - name: new-service
+        image: gcr.io/your-project/new-service:latest
+        ports:
+        - containerPort: 8080

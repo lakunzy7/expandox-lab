@@ -1,0 +1,15 @@
+# Values for the loki-stack Helm chart
+
+# -- Loki configuration
+loki:
+  # -- Loki storage configuration
+  persistence:
+    enabled: true
+    size: 20Gi
+    # storageClassName: "your-storage-class" # Set your storage class if needed
+
+# -- Promtail configuration
+promtail:
+  # -- Promtail is the agent that ships logs from nodes to Loki.
+  # -- It's deployed as a DaemonSet.
+  enabled: true

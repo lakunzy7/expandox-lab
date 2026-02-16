@@ -1,0 +1,36 @@
+# rbac-example.yaml
+#
+# This example demonstrates the principle of least privilege for a pod
+# that needs to read a ConfigMap.
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-app-sa
+  namespace: default # Should be your application's namespace
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: configmap-reader
+  namespace: default # Should be your application's namespace
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["configmaps"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: my-app-read-configmaps
+  namespace: default # Should be your application's namespace
+subjects:
+- kind: ServiceAccount
+  name: my-app-sa
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: configmap-reader
+  apiGroup: rbac.authorization.k8s.io
