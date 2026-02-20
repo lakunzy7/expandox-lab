@@ -25,8 +25,5 @@ resource "kind_cluster" "devops_cluster" {
       role = "worker"
     }
 
-    node {
-      role = "worker"
-    }
   }
 }

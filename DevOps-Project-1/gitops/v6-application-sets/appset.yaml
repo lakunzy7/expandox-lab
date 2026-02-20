@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: mini-finance-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - environment: dev
+        namespace: mini-finance-dev
+        branch: develop
+      - environment: production
+        namespace: mini-finance-prod
+        branch: main
+  template:
+    metadata:
+      name: 'mini-finance-{{environment}}'
+    spec:
+      project: finance-apps
+      source:
+        repoURL: https://github.com/lakunzy7/expandox-lab.git
+        targetRevision: '{{branch}}'
+        path: 'DevOps-Project-1/k8s/{{environment}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
