@@ -6,7 +6,7 @@ metadata:
     labels:
         app: mini-finance-app
 spec:
-    replicas: 2
+    replicas: 1
     selector:
         matchLabels:
             app: mini-finance-app

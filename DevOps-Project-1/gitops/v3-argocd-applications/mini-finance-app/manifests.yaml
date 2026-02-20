@@ -17,7 +17,7 @@ spec:
         spec:
             containers:
                 - name: mini-finance-app
-                  image: lakunzy/mini-finance-app:v2
+                  image: lakunzy/mini-finance-app:latest
                   imagePullPolicy: IfNotPresent
                   ports:
                       - containerPort: 80
